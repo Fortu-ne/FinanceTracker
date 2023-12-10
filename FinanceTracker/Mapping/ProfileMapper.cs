@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FinanceTracker.Data;
 using FinanceTracker.Dto;
+using System.Transactions;
 
 namespace FinanceTracker.Mapping
 {
@@ -14,6 +15,8 @@ namespace FinanceTracker.Mapping
             CreateMap<Category, CategoryDto>();
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+            CreateMap<Transaction, TransactionDto>();
+            CreateMap<TransactionDto, Transaction>();
         }
     }
 }
