@@ -25,7 +25,7 @@ namespace FinanceTracker.Controllers
         [ProducesResponseType(200)]
         public IActionResult Index()
         {
-            var users = _mapper.Map<User>(_userRep.GetUsers());
+            var users = _mapper.Map<List<User>>(_userRep.GetUsers());
 
             if (!ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace FinanceTracker.Controllers
             }
 
             var user = _userRep.GetUsers().Where(r => r.Email.Trim().ToLower() == request.Email.Trim().ToLower() ||
-            r.Username.Trim().ToLower() == request.Username.Trim().ToLower());
+            r.Username.Trim().ToLower() == request.Username.Trim().ToLower()).FirstOrDefault();
 
 
             if (user != null)
