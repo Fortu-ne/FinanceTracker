@@ -16,9 +16,9 @@ namespace FinanceTracker.Data
         [Column("Email")]
         [EmailAddress]
         public string Email { get; set; }
-        [Column("Date of Birth")]
-        public DateOnly DOB { get; set; }
-        public string Password { get; set; }
+        //[Column("Date of Birth")]
+        //public DateOnly DOB { get; set; }
+     
         [Column("Monthly Salary")]
         public Double MonthlySalary { get; set; }
 

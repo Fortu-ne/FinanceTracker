@@ -13,5 +13,9 @@ namespace FinanceTracker.Data
         public AccountType AccountType { get; set; }
         public List<Transaction> Transaction { get; set; }
 
+        [ForeignKey(nameof(UserId))]
+        public Guid UserId { get; set; }
+        public User User { get; set; }
+
     }
 }

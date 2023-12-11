@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FinanceTracker.Data;
 using FinanceTracker.Dto;
-using System.Transactions;
 
 namespace FinanceTracker.Mapping
 {

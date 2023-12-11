@@ -12,9 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IBudget, BudgetRepository>();
+//builder.Services.AddScoped<IBudget, BudgetRepository>();
 builder.Services.AddScoped<ICategory, CategoryReposiroty>();
-builder.Services.AddTransient<IUser,UserRepository>();
+builder.Services.AddScoped<IUser,UserRepository>();
 
 builder.Services.AddDbContext<DataContext>(op =>
 {
