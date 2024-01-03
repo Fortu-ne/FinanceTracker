@@ -25,14 +25,14 @@ namespace FinanceTracker.Repository
             return Save();
         }
 
-        public bool findUser(Guid Id, string name)
+        public bool findUser(Guid Id)
         {
-           return _context.Users.Any(r=>r.Name == name || r.Id == Id);
+           return _context.Users.Any(r=>r.Id == Id);
         }
 
-        public User GetUser(Guid Id, string search)
+        public User GetUser(Guid Id)
         {
-            return _context.Users.Where(r => r.Name == search || r.Id == Id).FirstOrDefault();
+            return _context.Users.Where(r => r.Id == Id).FirstOrDefault();
         }
 
         public List<User> GetUsers()

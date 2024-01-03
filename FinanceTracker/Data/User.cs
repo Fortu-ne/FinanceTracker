@@ -22,7 +22,7 @@ namespace FinanceTracker.Data
         [Column("Monthly Salary")]
         public Double MonthlySalary { get; set; }
 
-        public List<Budget> Budgets { get; set; }
-        public List<Account> Accounts { get; set; }
+        public List<Budget>? Budgets { get; set; }
+        public List<Account>? Accounts { get; set; }
     }
 }

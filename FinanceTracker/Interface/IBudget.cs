@@ -10,7 +10,6 @@ namespace FinanceTracker.Interface
          bool updateBudget(Budget budget);
          bool findBudget(int Id);
          bool deleteBudget(Budget budget);
-
          bool Save();
     }
 }

@@ -16,6 +16,8 @@ namespace FinanceTracker.Mapping
             CreateMap<UserDto, User>();
             CreateMap<Transaction, TransactionDto>();
             CreateMap<TransactionDto, Transaction>();
+            CreateMap<Transaction, TransactionDto>();   
+            CreateMap<TransactionDto, Transaction>();
         }
     }
 }

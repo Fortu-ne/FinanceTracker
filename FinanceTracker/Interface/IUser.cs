@@ -7,10 +7,10 @@ namespace FinanceTracker.Interface
         List<User> GetUsers();
         bool createUser(User user);
         bool updateUser(User user);
-        bool findUser(Guid Id, String name);
+        bool findUser(Guid id);
         bool deleteUser(User user);
 
-        User GetUser(Guid Id, String search);
+        User GetUser(Guid Id);
 
         bool Save();
     }

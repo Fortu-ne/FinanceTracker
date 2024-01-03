@@ -13,9 +13,9 @@ namespace FinanceTracker.Data
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public Guid UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("User")]
+        public Guid UsersId { get; set; }
+        public User Users { get; set; }
     }
 
 }
