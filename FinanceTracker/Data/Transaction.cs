@@ -12,11 +12,13 @@ namespace FinanceTracker.Data
         public DateTime Date { get; set; }
         public Double Amount { get; set; }
 
-        public int AccountId { get; set; }
-        public Account Account { get; set; }
+        [ForeignKey("Account")]
+        public Guid AccountsId { get; set; }
+        public Account Accounts { get; set; }
 
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        [ForeignKey("Category")]
+        public int CategorysId { get; set; }
+        public Category Categorys { get; set; }
     }
 
 }

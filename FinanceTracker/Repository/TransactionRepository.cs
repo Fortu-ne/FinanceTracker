@@ -43,7 +43,7 @@ namespace FinanceTracker.Repository
             return _context.Transactions.FirstOrDefault(r=>r.Id == transaction.Id);
         }
 
-        public List<Transaction> GetAll()
+        public ICollection<Transaction> GetAll()
         {
             return _context.Transactions.ToList();
         }

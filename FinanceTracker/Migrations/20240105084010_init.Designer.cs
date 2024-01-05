@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceTracker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240103072714_init5")]
-    partial class init5
+    [Migration("20240105084010_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace FinanceTracker.Migrations
 
             modelBuilder.Entity("FinanceTracker.Data.Account", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AccountName")
                         .IsRequired()
@@ -114,13 +112,13 @@ namespace FinanceTracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AccountsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("CategorysId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -132,9 +130,9 @@ namespace FinanceTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("AccountsId");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategorysId");
 
                     b.ToTable("Transactions");
                 });
@@ -163,6 +161,7 @@ namespace FinanceTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -198,21 +197,21 @@ namespace FinanceTracker.Migrations
 
             modelBuilder.Entity("FinanceTracker.Data.Transaction", b =>
                 {
-                    b.HasOne("FinanceTracker.Data.Account", "Account")
+                    b.HasOne("FinanceTracker.Data.Account", "Accounts")
                         .WithMany("Transaction")
-                        .HasForeignKey("AccountId")
+                        .HasForeignKey("AccountsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FinanceTracker.Data.Category", "Category")
+                    b.HasOne("FinanceTracker.Data.Category", "Categorys")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("CategorysId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.Navigation("Accounts");
 
-                    b.Navigation("Category");
+                    b.Navigation("Categorys");
                 });
 
             modelBuilder.Entity("FinanceTracker.Data.Account", b =>

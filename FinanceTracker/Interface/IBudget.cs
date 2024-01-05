@@ -5,11 +5,15 @@ namespace FinanceTracker.Interface
 {
     public interface IBudget
     {
-         List<Budget> GetBudgets();
-         bool createBudget(Budget budget);
+         ICollection<Budget> GetBudgets();
+         bool createBudget(Guid id,Budget budget);
          bool updateBudget(Budget budget);
          bool findBudget(int Id);
          bool deleteBudget(Budget budget);
-         bool Save();
+
+        Budget GetBudget(Budget budget);
+
+        Budget GetBudgetById(int budgetID);
+        bool Save();
     }
 }

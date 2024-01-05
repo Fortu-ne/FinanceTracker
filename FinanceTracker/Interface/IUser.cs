@@ -4,7 +4,7 @@ namespace FinanceTracker.Interface
 {
     public interface IUser
     {
-        List<User> GetUsers();
+        ICollection<User> GetUsers();
         bool createUser(User user);
         bool updateUser(User user);
         bool findUser(Guid id);

@@ -38,7 +38,7 @@ namespace FinanceTracker.Repository
             return _context.Categories.Any(c => c.Id == Id);
         }
 
-        public List<Category> GetAll()
+        public ICollection<Category> GetAll()
         {
             return _context.Categories.ToList();
         }

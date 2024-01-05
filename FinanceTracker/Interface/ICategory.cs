@@ -4,7 +4,7 @@ namespace FinanceTracker.Interface
 {
     public interface ICategory
     {
-        List<Category> GetAll();
+        ICollection<Category> GetAll();
         bool createCategory(Category category);
         bool updateCategory(Category category);
         bool findCategory(int Id);

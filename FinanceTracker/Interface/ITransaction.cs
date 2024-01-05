@@ -4,7 +4,7 @@ namespace FinanceTracker.Interface
 {
     public interface ITransaction
     {
-        List<Transaction> GetAll();
+        ICollection<Transaction> GetAll();
         bool create(Transaction transaction);
         bool update(Transaction transaction);
         bool delete(Transaction transaction);

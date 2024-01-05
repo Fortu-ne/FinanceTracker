@@ -1,6 +1,7 @@
 ﻿using FinanceTracker.Data;
 using FinanceTracker.Data.DbDataContext;
 using FinanceTracker.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Repository
 {
@@ -35,9 +36,9 @@ namespace FinanceTracker.Repository
             return _context.Users.Where(r => r.Id == Id).FirstOrDefault();
         }
 
-        public List<User> GetUsers()
+        public ICollection<User> GetUsers()
         {
-            return _context.Users.ToList();
+            return _context.Users.Include(r=>r.Accounts).ToList();
         }
 
         public bool Save()

@@ -7,13 +7,13 @@ namespace FinanceTracker.Data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; } 
+        public Guid Id { get; set; } 
         public string AccountName { get; set; }
         public Double Balance { get; set; }
         public AccountType AccountType { get; set; }
         public List<Transaction> Transaction { get; set; }
 
-        [ForeignKey(nameof(UserId))]
+        [ForeignKey("UserId")]
         public Guid UserId { get; set; }
         public User User { get; set; }
 

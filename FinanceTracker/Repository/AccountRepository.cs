@@ -1,6 +1,7 @@
 ﻿using FinanceTracker.Data;
 using FinanceTracker.Data.DbDataContext;
 using FinanceTracker.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Repository
 {
@@ -13,31 +14,28 @@ namespace FinanceTracker.Repository
             _context = context;
         }
 
-        public bool createAccount(Account account)
+        public bool createAccount(Guid id,Account account)
         {
-            if(account == null)
-            {
-                _context.Accounts.Add(account);
-
-            }
-
+            var model = _context.Users.Where(r => r.Id == id).FirstOrDefault();
+            account.User = model;
+            _context.Accounts.Add(account);
             return Save();
         }
 
         public bool deleteAccount(Account account)
         {
-            var model = _context.Accounts.FirstOrDefault(c => c.Id == account.Id);
-            if (model != null)
+           if(findAccount(account.Id))
             {
+                var model = GetAccountById(account.Id);
                 _context.Accounts.Remove(account);
-            
+              
             }
 
-           return Save();
+            return Save();
 
         }
 
-        public bool findAccount(int Id)
+        public bool findAccount(Guid Id)
         {
             return _context.Accounts.Any(a => a.Id == Id);
         }
@@ -48,9 +46,14 @@ namespace FinanceTracker.Repository
             return _context.Accounts.Where(r => r.AccountName == account.AccountName).FirstOrDefault();
         }
 
-        public List<Account> GetAccounts()
+        public Account GetAccountById(Guid accountID)
         {
-            return _context.Accounts.ToList();
+            return _context.Accounts.Where(r=>r.Id == accountID).FirstOrDefault();
+        }
+
+        public ICollection<Account> GetAccounts()
+        {
+            return _context.Accounts.Include(r=>r.User).ToList();
         }
 
         public bool Save()
@@ -62,7 +65,7 @@ namespace FinanceTracker.Repository
 
         public bool updateAccount(Account account)
         {
-            _context.Update(account);
+            _context.Accounts.Update(account);
             return Save();
         }
     }

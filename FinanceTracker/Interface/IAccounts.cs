@@ -4,13 +4,15 @@ namespace FinanceTracker.Interface
 {
     public interface IAccounts
     {
-        List<Account> GetAccounts();
-        bool createAccount(Account account);
+        ICollection<Account> GetAccounts();
+        bool createAccount(Guid id,Account account);
         bool updateAccount(Account account);
         bool deleteAccount(Account account);
 
         Account GetAccount(Account account);
-        bool findAccount(int Id);
+
+        Account GetAccountById(Guid accountID);
+        bool findAccount(Guid Id);
         bool Save();
     }
 }
