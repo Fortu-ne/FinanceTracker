@@ -1,3 +1,4 @@
+using FinanceTracker.Data.DateConverter;
 using FinanceTracker.Data.DbDataContext;
 using FinanceTracker.Interface;
 using FinanceTracker.Repository;
@@ -14,7 +15,10 @@ builder.Services.AddControllers()
         .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
         });
+
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
