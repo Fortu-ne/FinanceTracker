@@ -6,7 +6,7 @@ namespace FinanceTracker.Interface
     public interface IBudget
     {
          ICollection<Budget> GetBudgets();
-         bool createBudget(Guid id,Budget budget);
+         bool createBudget(Budget budget);
          bool updateBudget(Budget budget);
          bool findBudget(int Id);
          bool deleteBudget(Budget budget);

@@ -8,14 +8,14 @@ namespace FinanceTracker.Mapping
     {
         public ProfileMapper()
         {
-            CreateMap<BudgetDto, Budget>();
             CreateMap<Budget, BudgetDto>();
+            CreateMap<BudgetDto, Budget>();
             CreateMap<CategoryDto, Category>();
             CreateMap<Category, CategoryDto>();
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
-            CreateMap<Account, BudgetDto>();
-            CreateMap<BudgetDto, Account>();
+            CreateMap<Account, AccountDto>();
+            CreateMap<AccountDto, Account>();
             CreateMap<Transaction, TransactionDto>();   
             CreateMap<TransactionDto, Transaction>();
         }

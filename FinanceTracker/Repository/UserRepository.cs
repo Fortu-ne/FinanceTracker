@@ -38,7 +38,7 @@ namespace FinanceTracker.Repository
 
         public ICollection<User> GetUsers()
         {
-            return _context.Users.Include(r=>r.Accounts).ToList();
+            return _context.Users.Include(r=>r.Accounts).Include(r=>r.Budgets).ToList();
         }
 
         public bool Save()

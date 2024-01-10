@@ -73,14 +73,15 @@ namespace FinanceTracker.Controllers
                 Name = request.Name,
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                Users = getUser,
-                UsersId = request.UserId,
+                Amount = request.Amount,
+                User = getUser,
+                UserId = request.UserId,
             };
 
             var budgetMapper = _mapper.Map<Budget>(mod);
 
 
-            if (!_budgetRep.createBudget(request.UserId, budgetMapper))
+            if (!_budgetRep.createBudget(budgetMapper))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
@@ -115,7 +116,8 @@ namespace FinanceTracker.Controllers
                 return StatusCode(404, ModelState);
             }
 
-            var budget = _budgetRep.GetBudgetById(id);
+
+            var userUpdate = _context.Users.Where(r => r.Id == request.UserId).FirstOrDefault();
 
             var budgetUpdate = _mapper.Map<Budget>(new Budget
             {
@@ -123,8 +125,8 @@ namespace FinanceTracker.Controllers
                 Name = request.Name,
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                Users = budget.Users,
-                UsersId = budget.UsersId,
+                User = userUpdate,
+                UserId = request.UserId,
 
             });
 
@@ -156,11 +158,11 @@ namespace FinanceTracker.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = _mapper.Map<BudgetDto>(_budgetRep.GetBudgetById(id));
+            var budget = _mapper.Map<BudgetDto>(_budgetRep.GetBudgetById(id));
 
 
 
-            return Ok(user);
+            return Ok(budget);
         }
 
 

@@ -16,10 +16,9 @@ namespace FinanceTracker.Repository
             _context = context;
         }
 
-        public bool createBudget(Guid id,Budget budget)
+        public bool createBudget(Budget budget)
         {
-            var model = _context.Users.Where(r => r.Id == id).FirstOrDefault();
-            budget.Users = model;
+           
             _context.Budgets.Add(budget);
             return Save();
         }
@@ -53,7 +52,7 @@ namespace FinanceTracker.Repository
 
         public ICollection<Budget> GetBudgets()
         {
-            return _context.Budgets.Include(r => r.Users).ToList();
+            return _context.Budgets.Include(r => r.User).ToList();
         }
 
         public bool Save()

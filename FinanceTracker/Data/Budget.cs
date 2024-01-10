@@ -13,14 +13,14 @@ namespace FinanceTracker.Data
         public String Name { get; set; }
         public Double Amount { get; set; }
 
-        [JsonConverter(typeof(DateOnlyJsonConverter))]
+        [JsonConverter(typeof(DateJsonConverter))]
         public DateOnly StartDate { get; set; }
-        [JsonConverter(typeof(DateOnlyJsonConverter))]
+        [JsonConverter(typeof(DateJsonConverter))]
         public DateOnly EndDate { get; set; }
 
-        [ForeignKey("User")]
-        public Guid UsersId { get; set; }
-        public User Users { get; set; }
+        [ForeignKey("UserId")]
+        public Guid UserId { get; set; }
+        public User User { get; set; }
     }
 
 }

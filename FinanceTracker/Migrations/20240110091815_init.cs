@@ -71,8 +71,7 @@ namespace FinanceTracker.Migrations
                     Amount = table.Column<double>(type: "float", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,11 +79,6 @@ namespace FinanceTracker.Migrations
                     table.ForeignKey(
                         name: "FK_Budgets_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Budgets_Users_UsersId",
-                        column: x => x.UsersId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -97,23 +91,23 @@ namespace FinanceTracker.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
-                    AccountsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategorysId = table.Column<int>(type: "int", nullable: false)
+                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_Accounts_AccountsId",
-                        column: x => x.AccountsId,
+                        name: "FK_Transactions_Accounts_AccountId",
+                        column: x => x.AccountId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transactions_Categories_CategorysId",
-                        column: x => x.CategorysId,
+                        name: "FK_Transactions_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -130,19 +124,14 @@ namespace FinanceTracker.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Budgets_UsersId",
-                table: "Budgets",
-                column: "UsersId");
+                name: "IX_Transactions_AccountId",
+                table: "Transactions",
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_AccountsId",
+                name: "IX_Transactions_CategoryId",
                 table: "Transactions",
-                column: "AccountsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_CategorysId",
-                table: "Transactions",
-                column: "CategorysId");
+                column: "CategoryId");
         }
 
         /// <inheritdoc />

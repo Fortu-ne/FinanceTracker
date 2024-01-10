@@ -15,7 +15,7 @@ builder.Services.AddControllers()
         .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-            options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+            options.JsonSerializerOptions.Converters.Add(new DateJsonConverter());
         });
 
 
@@ -34,7 +34,7 @@ builder.Services.AddTransient<ITransaction, TransactionRepository>();
 
 
 builder.Services.AddDbContext<DataContext>(op =>
-{
+    {
     op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 

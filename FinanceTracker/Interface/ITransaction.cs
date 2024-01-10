@@ -10,6 +10,8 @@ namespace FinanceTracker.Interface
         bool delete(Transaction transaction);
 
         Transaction Get(Transaction transaction);
+
+        Transaction GetTransactionById(int transID);
         bool find(int Id);
         bool Save();
     }

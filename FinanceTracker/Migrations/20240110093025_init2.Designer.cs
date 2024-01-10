@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceTracker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240105084010_init")]
-    partial class init
+    [Migration("20240110093025_init2")]
+    partial class init2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,17 +72,12 @@ namespace FinanceTracker.Migrations
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsersId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UsersId");
 
                     b.ToTable("Budgets");
                 });
@@ -112,17 +107,17 @@ namespace FinanceTracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("AccountsId")
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<int>("CategorysId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -130,9 +125,9 @@ namespace FinanceTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountsId");
+                    b.HasIndex("AccountId");
 
-                    b.HasIndex("CategorysId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Transactions");
                 });
@@ -182,36 +177,32 @@ namespace FinanceTracker.Migrations
 
             modelBuilder.Entity("FinanceTracker.Data.Budget", b =>
                 {
-                    b.HasOne("FinanceTracker.Data.User", null)
+                    b.HasOne("FinanceTracker.Data.User", "User")
                         .WithMany("Budgets")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("FinanceTracker.Data.User", "Users")
-                        .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FinanceTracker.Data.Transaction", b =>
                 {
-                    b.HasOne("FinanceTracker.Data.Account", "Accounts")
+                    b.HasOne("FinanceTracker.Data.Account", "Account")
                         .WithMany("Transaction")
-                        .HasForeignKey("AccountsId")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FinanceTracker.Data.Category", "Categorys")
+                    b.HasOne("FinanceTracker.Data.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategorysId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Accounts");
+                    b.Navigation("Account");
 
-                    b.Navigation("Categorys");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("FinanceTracker.Data.Account", b =>

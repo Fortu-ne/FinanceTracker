@@ -16,7 +16,7 @@ namespace FinanceTracker.Controllers
     public class AccountController : ControllerBase
     {
 
-        private readonly IAccounts accountRep;
+        private readonly IAccounts accountRep; 
 
         private readonly DataContext _context;
 
@@ -38,7 +38,7 @@ namespace FinanceTracker.Controllers
         [ProducesResponseType(400)]
         public IActionResult Index()
         {
-            var results = _mapper.Map<ICollection<BudgetDto>>(accountRep.GetAccounts());
+            var results = _mapper.Map<ICollection<Account>>(accountRep.GetAccounts());
 
             if (!ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace FinanceTracker.Controllers
 
 
         [HttpPut("{id:Guid}")]
-        [ProducesResponseType(typeof(BudgetDto), 200)]
+        [ProducesResponseType(typeof(AccountDto), 200)]
         //[Authorize(Roles = "Admin")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -119,7 +119,8 @@ namespace FinanceTracker.Controllers
                 return StatusCode(404, ModelState);
             }
 
-            var account = accountRep.GetAccountById(id);
+         
+            var updateUser = _context.Users.Where(r=>r.Id == id).FirstOrDefault();
 
             var accountUpdate = _mapper.Map<Account>(new Account
             {
@@ -127,14 +128,15 @@ namespace FinanceTracker.Controllers
                 AccountName = request.AccountName,
                 Balance = request.Balance,
                 AccountType = request.AccountType,
-                User =account.User,
-                UserId = account.UserId,
+                User =updateUser,
+                UserId = request.UserId,
                 
             });
 
-            if (accountUpdate != null)
+            if (!accountRep.updateAccount(accountUpdate))
             {
-                accountRep.updateAccount(accountUpdate);
+                ModelState.AddModelError("", "Something went wrong while updating");
+                return StatusCode(500, ModelState);
             }
 
             return NoContent();
@@ -160,7 +162,7 @@ namespace FinanceTracker.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = _mapper.Map<BudgetDto>(accountRep.GetAccountById(id));
+            var user = _mapper.Map<AccountDto>(accountRep.GetAccountById(id));
 
 
 

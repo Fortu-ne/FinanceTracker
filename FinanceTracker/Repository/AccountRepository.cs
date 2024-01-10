@@ -27,7 +27,7 @@ namespace FinanceTracker.Repository
            if(findAccount(account.Id))
             {
                 var model = GetAccountById(account.Id);
-                _context.Accounts.Remove(account);
+                _context.Accounts.Remove(model);
               
             }
 
@@ -53,7 +53,7 @@ namespace FinanceTracker.Repository
 
         public ICollection<Account> GetAccounts()
         {
-            return _context.Accounts.Include(r=>r.User).ToList();
+            return _context.Accounts.Include(r=>r.Transaction).ToList();
         }
 
         public bool Save()

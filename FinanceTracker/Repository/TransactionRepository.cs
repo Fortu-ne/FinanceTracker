@@ -1,6 +1,10 @@
 ﻿using FinanceTracker.Data;
 using FinanceTracker.Data.DbDataContext;
 using FinanceTracker.Interface;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using System;
+using System.Security.Principal;
 
 namespace FinanceTracker.Repository
 {
@@ -14,20 +18,19 @@ namespace FinanceTracker.Repository
 
         public bool create(Transaction transaction)
         {
-            if(transaction == null)
-                _context.Transactions.Add(transaction);
-
+            //var model = _context.Accounts.Where(r => r.Id == id).FirstOrDefault();
+            //transaction.User = model;
+            _context.Transactions.Add(transaction);
             return Save();
         }
 
         public bool delete(Transaction transaction)
         {
-
-            var model = _context.Transactions.Where(r=>r.Id == transaction.Id).FirstOrDefault();
-
-            if(model != null)
+            if (find(transaction.Id))
             {
-                _context.Transactions.Remove(model);
+                var model = GetTransactionById(transaction.Id);
+                _context.Transactions.Remove(transaction);
+
             }
 
             return Save();
@@ -35,30 +38,37 @@ namespace FinanceTracker.Repository
 
         public bool find(int Id)
         {
-           return _context.Transactions.Any(r=>r.Id == Id);
+            return _context.Transactions.Any(a => a.Id == Id);
         }
 
         public Transaction Get(Transaction transaction)
         {
-            return _context.Transactions.FirstOrDefault(r=>r.Id == transaction.Id);
+            return _context.Transactions.Where(r => r.Name == transaction.Name).FirstOrDefault();
         }
 
         public ICollection<Transaction> GetAll()
         {
-            return _context.Transactions.ToList();
+
+            return _context.Transactions.Include(r=>r.Category).ToList();
+        }
+
+        public Transaction GetTransactionById(int transID)
+        {
+            return _context.Transactions.Where(r => r.Id == transID).FirstOrDefault();
         }
 
         public bool Save()
         {
+            var save = _context.SaveChanges();
 
-            var save =_context.SaveChanges();
-
-            return save > 0? true : false;
+            return save > 0 ? true : false;
         }
 
         public bool update(Transaction transaction)
         {
-            _context.Update(transaction);
+            
+                _context.Transactions.Update(transaction);
+
             return Save();
         }
     }

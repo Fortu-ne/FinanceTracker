@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace FinanceTracker.Data.DateConverter
 {
-    public class DateOnlyJsonConverter : JsonConverter<DateOnly>
+    public class DateJsonConverter : JsonConverter<DateOnly>
     {
         private const string Format = "yyyy-MM-dd";
 
